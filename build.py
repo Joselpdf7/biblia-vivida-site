@@ -14,9 +14,7 @@ import html
 CONFIG = {
     "dominio": "vividbible.app",  # domínio principal (sem https://); bibliavivida.com abre em PT
     "email": "support@vividbible.app",  # encaminha (Cloudflare Email Routing) para a caixa da equipe
-    "empresa": "",          # razão social de quem publica o app (titular da conta Apple)
-    "cnpj": "",             # CNPJ da empresa
-    "cidade_foro": "",      # ex.: São Paulo/SP
+    "responsavel": "Fabricio Silva",  # titular (pessoa física) da conta Apple Developer
     "app_store_url": "",    # link da App Store quando o app for aprovado
 }
 ATUALIZADO = {"pt": "15 de novembro de 2026", "en": "November 15, 2026", "es": "15 de noviembre de 2026"}
@@ -27,10 +25,10 @@ PAGINAS = {  # chave interna -> nome de arquivo por idioma
     "home": {"pt": "index.html", "en": "index.html", "es": "index.html"},
     "suporte": {"pt": "suporte.html", "en": "support.html", "es": "soporte.html"},
     "privacidade": {"pt": "privacidade.html", "en": "privacy.html", "es": "privacidad.html"},
-    "termos": {"pt": "termos.html", "en": "terms.html", "es": "terminos.html"},
 }
 LANG_ATTR = {"pt": "pt-BR", "en": "en", "es": "es"}
-NOME = {"pt": "Bíblia Vívida", "en": "Vivid Bible", "es": "Bíblia Vívida"}
+NOME = {"pt": "Bíblia Vívida", "en": "Vivid Bible", "es": "Biblia Vívida"}
+EULA = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
 
 
 def P(chave, lang):
@@ -39,9 +37,9 @@ def P(chave, lang):
     if v:
         return html.escape(v)
     rotulo = {
-        "pt": {"dominio": "DOMÍNIO", "email": "E-MAIL DE SUPORTE", "empresa": "RAZÃO SOCIAL", "cnpj": "CNPJ", "cidade_foro": "CIDADE DO FORO"},
-        "en": {"dominio": "DOMAIN", "email": "SUPPORT EMAIL", "empresa": "LEGAL ENTITY", "cnpj": "CNPJ", "cidade_foro": "VENUE CITY"},
-        "es": {"dominio": "DOMINIO", "email": "CORREO DE SOPORTE", "empresa": "RAZÓN SOCIAL", "cnpj": "CNPJ", "cidade_foro": "CIUDAD DEL FORO"},
+        "pt": {"dominio": "DOMÍNIO", "email": "E-MAIL DE SUPORTE", "responsavel": "NOME DO RESPONSÁVEL"},
+        "en": {"dominio": "DOMAIN", "email": "SUPPORT EMAIL", "responsavel": "LEGAL NAME"},
+        "es": {"dominio": "DOMINIO", "email": "CORREO DE SOPORTE", "responsavel": "NOMBRE DEL RESPONSABLE"},
     }[lang].get(chave, chave.upper())
     return f'<mark class="pendente">[{rotulo}]</mark>'
 
@@ -59,7 +57,7 @@ def EMAIL(lang):
 # ---------------------------------------------------------------------------
 UI = {
     "pt": {
-        "nav": {"home": "Início", "suporte": "Suporte", "privacidade": "Privacidade", "termos": "Termos"},
+        "nav": {"home": "Início", "suporte": "Suporte", "privacidade": "Privacidade", "termos": "Termos de uso"},
         "pular": "Pular para o conteúdo",
         "rodape": "Feito com cuidado para quem quer entender a Bíblia de perto.",
         "atualizado": "Última atualização",
@@ -67,7 +65,7 @@ UI = {
         "baixar": "Baixar na App Store",
     },
     "en": {
-        "nav": {"home": "Home", "suporte": "Support", "privacidade": "Privacy", "termos": "Terms"},
+        "nav": {"home": "Home", "suporte": "Support", "privacidade": "Privacy", "termos": "Terms of use"},
         "pular": "Skip to content",
         "rodape": "Made with care for anyone who wants to understand the Bible up close.",
         "atualizado": "Last updated",
@@ -75,7 +73,7 @@ UI = {
         "baixar": "Download on the App Store",
     },
     "es": {
-        "nav": {"home": "Inicio", "suporte": "Soporte", "privacidade": "Privacidad", "termos": "Términos"},
+        "nav": {"home": "Inicio", "suporte": "Soporte", "privacidade": "Privacidad", "termos": "Términos de uso"},
         "pular": "Saltar al contenido",
         "rodape": "Hecho con cuidado para quien quiere entender la Biblia de cerca.",
         "atualizado": "Última actualización",
@@ -315,8 +313,8 @@ def suporte(lang):
                 ("Como cancelo a assinatura?", "As assinaturas são gerenciadas pela Apple. No iPhone, abra <strong>Ajustes › [seu nome] › Assinaturas</strong>, escolha Bíblia Vívida e toque em Cancelar. O acesso continua até o fim do período já pago."),
                 ("Troquei de iPhone. Como recupero o Pro?", "Entre com o mesmo Apple ID, abra o app e toque em <strong>Restaurar compras</strong> na tela do Pro ou em Ajustes."),
                 ("Quero um reembolso.", "Reembolsos de compras feitas pela App Store são analisados pela Apple. Solicite em <a href=\"https://reportaproblem.apple.com\">reportaproblem.apple.com</a>."),
-                ("Onde ficam minhas anotações e salvos?", "No seu aparelho. Se você apagar o app sem ter ativado uma cópia de segurança, essas informações são removidas junto."),
-                ("Como apago meus dados?", "Apagar o app remove os dados locais. Se você criou uma conta, use <strong>Ajustes › Conta › Excluir conta</strong> ou escreva para nós. Detalhes na <a href=\"privacidade.html\">Política de Privacidade</a>."),
+                ("Onde ficam minhas anotações e salvos?", "No seu aparelho. O app não tem conta nem cópia na nuvem, então, se você apagar o app, essas informações são removidas junto."),
+                ("Como apago meus dados?", "Apagar o app remove todos os dados guardados no aparelho. Para dúvidas sobre dados da assinatura, escreva para nós. Detalhes na <a href=\"privacidade.html\">Política de Privacidade</a>."),
                 ("Encontrei um erro no texto ou uma informação imprecisa.", "Obrigado por avisar. Escreva para nós com o nome do livro e do cartão ou mande um print da tela."),
             ],
             contato_t="Fale com a gente",
@@ -333,8 +331,8 @@ def suporte(lang):
                 ("How do I cancel my subscription?", "Subscriptions are managed by Apple. On your iPhone, open <strong>Settings › [your name] › Subscriptions</strong>, choose Vivid Bible and tap Cancel. Access continues until the end of the period you already paid for."),
                 ("I got a new iPhone. How do I get Pro back?", "Sign in with the same Apple ID, open the app and tap <strong>Restore purchases</strong> on the Pro screen or in Settings."),
                 ("I would like a refund.", "Refunds for App Store purchases are handled by Apple. Request one at <a href=\"https://reportaproblem.apple.com\">reportaproblem.apple.com</a>."),
-                ("Where are my notes and saved items stored?", "On your device. If you delete the app without having turned on a backup, this information is removed with it."),
-                ("How do I delete my data?", "Deleting the app removes local data. If you created an account, go to <strong>Settings › Account › Delete account</strong> or write to us. See the <a href=\"privacy.html\">Privacy Policy</a> for details."),
+                ("Where are my notes and saved items stored?", "On your device. The app has no account or cloud backup, so if you delete the app, this information is removed with it."),
+                ("How do I delete my data?", "Deleting the app removes all data stored on the device. For questions about subscription data, write to us. See the <a href=\"privacy.html\">Privacy Policy</a> for details."),
                 ("I found a mistake or an inaccurate statement.", "Thank you for letting us know. Write to us with the book and card name, or send a screenshot."),
             ],
             contato_t="Contact us",
@@ -351,8 +349,8 @@ def suporte(lang):
                 ("¿Cómo cancelo la suscripción?", "Las suscripciones las gestiona Apple. En el iPhone, abre <strong>Ajustes › [tu nombre] › Suscripciones</strong>, elige Bíblia Vívida y toca Cancelar. El acceso continúa hasta el final del período ya pagado."),
                 ("Cambié de iPhone. ¿Cómo recupero Pro?", "Inicia sesión con el mismo Apple ID, abre la app y toca <strong>Restaurar compras</strong> en la pantalla Pro o en Ajustes."),
                 ("Quiero un reembolso.", "Los reembolsos de compras en la App Store los gestiona Apple. Solicítalo en <a href=\"https://reportaproblem.apple.com\">reportaproblem.apple.com</a>."),
-                ("¿Dónde se guardan mis notas y guardados?", "En tu dispositivo. Si borras la app sin haber activado una copia de seguridad, esa información se elimina con ella."),
-                ("¿Cómo borro mis datos?", "Borrar la app elimina los datos locales. Si creaste una cuenta, ve a <strong>Ajustes › Cuenta › Eliminar cuenta</strong> o escríbenos. Más detalles en la <a href=\"privacidad.html\">Política de Privacidad</a>."),
+                ("¿Dónde se guardan mis notas y guardados?", "En tu dispositivo. La app no tiene cuenta ni copia en la nube, así que, si borras la app, esa información se elimina con ella."),
+                ("¿Cómo borro mis datos?", "Borrar la app elimina todos los datos guardados en el dispositivo. Para dudas sobre datos de la suscripción, escríbenos. Más detalles en la <a href=\"privacidad.html\">Política de Privacidad</a>."),
                 ("Encontré un error o una información imprecisa.", "Gracias por avisarnos. Escríbenos con el nombre del libro y de la tarjeta, o envía una captura de pantalla."),
             ],
             contato_t="Escríbenos",
@@ -375,185 +373,94 @@ def suporte(lang):
 # Conteúdo: política de privacidade
 # ---------------------------------------------------------------------------
 def privacidade(lang):
-    E, EMP, CNPJ = EMAIL(lang), P("empresa", lang), P("cnpj", lang)
+    E, RESP = EMAIL(lang), P("responsavel", lang)
     secoes = {
         "pt": [
-            ("Quem somos", f"""<p>O aplicativo {NOME[lang]} (“app”) é oferecido por {EMP}, CNPJ {CNPJ} (“nós”). Somos responsáveis pelo tratamento dos dados pessoais descritos nesta política, nos termos da Lei Geral de Proteção de Dados (Lei 13.709/2018, “LGPD”).</p>"""),
+            ("Quem somos", f"""<p>O aplicativo {NOME[lang]} (“app”) é desenvolvido e publicado por {RESP}, pessoa física, no Brasil (“nós”). Somos o controlador dos dados pessoais descritos nesta política, nos termos da Lei Geral de Proteção de Dados (Lei 13.709/2018, “LGPD”).</p>"""),
             ("Resumo", """<ul>
-<li>Você pode ler, ouvir, salvar e anotar sem criar conta. Esses dados ficam no seu aparelho.</li>
+<li>O app não tem cadastro nem conta. Você lê, ouve, salva e anota sem informar nome ou e-mail.</li>
+<li>O que você faz no app fica guardado no seu aparelho.</li>
 <li>Pagamentos são processados pela Apple. Nunca recebemos o número do seu cartão.</li>
-<li>Recursos que enviam dados para a nuvem são opcionais e só funcionam com a sua ação ou consentimento.</li>
-<li>Não vendemos seus dados pessoais.</li>
+<li>O app não usa ferramentas de métricas, relatórios de falhas de terceiros nem publicidade.</li>
+<li>Não vendemos dados pessoais.</li>
 </ul>"""),
-            ("Dados que ficam no seu aparelho", """<p>Progresso de leitura, cartões salvos, coleções, histórico, diário, conquistas, preferências (idioma, tamanho de fonte, horário dos lembretes) e passagens registradas pelo scanner são guardados localmente no iPhone. Não temos acesso a essas informações enquanto você não ativar uma cópia na nuvem.</p>"""),
-            ("Assinatura e compras", """<p>A assinatura Pro é vendida pela App Store. A Apple processa o pagamento e nos informa apenas o status da compra. Usamos o serviço RevenueCat para validar assinaturas; ele recebe um identificador anônimo gerado pelo app e os dados da transação fornecidos pela Apple (produto, data, validade, país da loja). Base legal: execução de contrato.</p>"""),
-            ("Lembretes e notificações", """<p>Os lembretes de leitura são agendados no próprio aparelho. Se você ativar recursos de comunidade, poderemos enviar notificações sobre interações com o seu conteúdo; para isso, guardamos um token de notificação do aparelho. Você pode desligar notificações a qualquer momento nos Ajustes do iPhone.</p>"""),
-            ("Câmera e fotos", """<p>O scanner usa a câmera ou a galeria apenas quando você toca para fotografar ou escolher uma imagem. A foto serve para identificar a referência bíblica e não é enviada para nós, a menos que você ative o reconhecimento de texto por um serviço externo, descrito abaixo.</p>"""),
-            ("Conta, cópia na nuvem e comunidade (opcionais)", """<p>Quando esses recursos estiverem disponíveis e você decidir usá-los, trataremos: e-mail ou identificador de login (incluindo “Iniciar sessão com a Apple”), nome de exibição, foto de perfil e capa, a cópia dos seus dados de leitura, e o que você publicar em grupos ou jornadas compartilhadas. Conteúdos publicados ficam visíveis para os participantes escolhidos e podem ser moderados e denunciados. Base legal: execução de contrato e consentimento. Os dados ficam armazenados no provedor de banco de dados descrito na seção “Prestadores de serviço”.</p>"""),
-            ("Recursos de inteligência artificial (opcionais)", """<p>Recursos como reescrita de texto, geração de imagem ou leitura de texto em fotos (OCR) só funcionam depois do seu consentimento explícito. O conteúdo que você enviar é processado por um provedor de IA apenas para gerar a resposta e não é usado por nós para treinar modelos. Há limites de uso, e você pode desativar o recurso a qualquer momento.</p>"""),
-            ("Novidades por e-mail", """<p>Se você pedir para receber novidades, guardaremos seu e-mail para esse fim. Cada mensagem tem um link para cancelar o recebimento. Base legal: consentimento.</p>"""),
-            ("Métricas de uso e relatórios de erro", """<p><mark class="pendente">[CONFIRMAR COM O DESENVOLVIMENTO: o app usa algum serviço de métricas ou de relatório de falhas? Se sim, nomear o serviço, os dados coletados e se são vinculados à pessoa. Se não, escrever: “O app não usa ferramentas de métricas de terceiros nem publicidade.”]</mark></p>"""),
-            ("Prestadores de serviço", """<p>Compartilhamos dados somente com fornecedores necessários para o funcionamento do app, que os tratam conforme nossas instruções:</p>
+            ("Dados que ficam no seu aparelho", """<p>Progresso de leitura, cartões salvos, coleções, histórico, diário, conquistas, preferências (idioma, tamanho de fonte, horário dos lembretes) e passagens registradas pelo scanner são guardados apenas no iPhone. Essas informações não são enviadas para nós.</p>"""),
+            ("Assinatura e compras", """<p>A assinatura Pro é vendida pela App Store. A Apple processa o pagamento e informa ao app apenas o status da compra. Usamos o serviço RevenueCat para validar assinaturas: ele recebe um identificador anônimo gerado pelo app e os dados da transação fornecidos pela Apple (produto, data, validade, país da loja). Nenhum nome, e-mail ou dado de cartão é compartilhado com ele. Base legal: execução de contrato.</p>"""),
+            ("Lembretes", """<p>Os lembretes de leitura são agendados no próprio aparelho, com a sua permissão. Não enviamos notificações por servidor. Você pode desligá-las a qualquer momento nos Ajustes do iPhone.</p>"""),
+            ("Câmera e fotos", """<p>O scanner usa a câmera ou a galeria apenas quando você toca para fotografar ou escolher uma imagem. A imagem serve para registrar a referência bíblica e não é enviada para nós nem para terceiros.</p>"""),
+            ("Métricas e publicidade", """<p>O app não usa ferramentas de métricas de uso, de relatório de falhas de terceiros nem publicidade. Se você autorizou o compartilhamento de análises nos Ajustes do iPhone, a Apple pode fornecer aos desenvolvedores estatísticas agregadas e anônimas de uso e de falhas, conforme a política de privacidade da Apple.</p>"""),
+            ("Prestadores de serviço", """<p>Compartilhamos dados somente com os fornecedores necessários para o funcionamento do app:</p>
 <ul>
-<li><strong>Apple</strong>: distribuição do app, pagamentos, login com a Apple e entrega de notificações.</li>
+<li><strong>Apple</strong>: distribuição do app, pagamentos e assinaturas.</li>
 <li><strong>RevenueCat</strong>: validação de assinaturas.</li>
-<li><strong>Supabase</strong>: banco de dados e armazenamento de conta, cópia na nuvem e comunidade, quando ativados.</li>
-<li><strong>Provedor de IA</strong> <mark class="pendente">[NOME]</mark>: somente se você ativar recursos de IA.</li>
 </ul>
 <p>Também podemos compartilhar dados quando exigido por lei ou ordem de autoridade competente.</p>"""),
-            ("Transferência internacional", """<p>Alguns fornecedores armazenam dados fora do Brasil, inclusive nos Estados Unidos. Nesses casos, adotamos as salvaguardas previstas na LGPD, como cláusulas contratuais.</p>"""),
-            ("Por quanto tempo guardamos", """<p>Dados locais permanecem no aparelho até você apagá-los ou remover o app. Dados de conta são mantidos enquanto a conta existir. Ao excluir a conta, apagamos ou anonimizamos os dados em até 30 dias, exceto o que precisarmos guardar para cumprir obrigações legais.</p>"""),
-            ("Seus direitos", f"""<p>Você pode pedir confirmação de tratamento, acesso, correção, portabilidade, anonimização ou eliminação dos seus dados, informações sobre compartilhamento e revogação do consentimento. A exclusão da conta pode ser feita no próprio app, em <strong>Ajustes › Conta › Excluir conta</strong>. Para os demais pedidos, escreva para {E}. Você também pode apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD).</p>"""),
-            ("Crianças", """<p>O app não é direcionado a crianças menores de 13 anos e não coleta intencionalmente dados delas. Recursos de conta e comunidade exigem idade mínima de 13 anos ou autorização do responsável, conforme a lei aplicável.</p>"""),
-            ("Segurança", """<p>Usamos conexões criptografadas, controle de acesso e outras medidas razoáveis para proteger seus dados. Nenhum sistema é totalmente imune a falhas; se ocorrer um incidente relevante, avisaremos você e as autoridades conforme a lei.</p>"""),
-            ("Alterações", """<p>Podemos atualizar esta política. A data no topo indica a versão vigente. Mudanças relevantes serão avisadas no app.</p>"""),
-            ("Contato e encarregado", f"""<p>Encarregado pelo tratamento de dados: <mark class="pendente">[NOME DO ENCARREGADO]</mark>. Contato: {E}.</p>"""),
+            ("Transferência internacional", """<p>A Apple e o RevenueCat podem armazenar os dados de compra fora do Brasil, inclusive nos Estados Unidos, com as salvaguardas previstas na LGPD.</p>"""),
+            ("Por quanto tempo guardamos", """<p>Os dados do app ficam no aparelho até você apagá-los ou remover o app. Os registros de assinatura são mantidos pela Apple e pelo RevenueCat enquanto forem necessários para a assinatura e para obrigações legais.</p>"""),
+            ("Seus direitos", f"""<p>Você pode pedir confirmação de tratamento, acesso, correção, eliminação e informações sobre compartilhamento dos seus dados. Como o app não tem conta, a maior parte das informações está somente no seu aparelho, e apagar o app as remove. Para pedidos sobre dados de assinatura, escreva para {E}. Você também pode apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD).</p>"""),
+            ("Crianças", """<p>O app não é direcionado a crianças menores de 13 anos e não coleta intencionalmente dados pessoais delas.</p>"""),
+            ("Segurança", """<p>As compras usam a infraestrutura da Apple, e a comunicação com o RevenueCat é criptografada. Os dados do app ficam protegidos pelos recursos de segurança do próprio iPhone.</p>"""),
+            ("Alterações", """<p>Podemos atualizar esta política, por exemplo se novos recursos forem lançados. A data no topo indica a versão vigente, e mudanças relevantes serão avisadas no app.</p>"""),
+            ("Contato", f"""<p>Controlador e responsável pelo atendimento a titulares: {RESP}. Contato: {E}.</p>"""),
         ],
         "en": [
-            ("Who we are", f"""<p>The {NOME[lang]} app (the “app”) is provided by {EMP}, Brazilian company registration (CNPJ) {CNPJ} (“we”, “us”). We are the controller of the personal data described in this policy under Brazil’s General Data Protection Law (LGPD) and other applicable laws.</p>"""),
+            ("Who we are", f"""<p>The {NOME[lang]} app (the “app”) is developed and published by {RESP}, an individual developer based in Brazil (“we”, “us”). We are the controller of the personal data described in this policy under Brazil’s General Data Protection Law (LGPD) and other applicable laws.</p>"""),
             ("Summary", """<ul>
-<li>You can read, listen, save and take notes without an account. That data stays on your device.</li>
+<li>The app has no sign-up or account. You can read, listen, save and take notes without giving a name or email.</li>
+<li>What you do in the app is stored on your device.</li>
 <li>Payments are processed by Apple. We never receive your card number.</li>
-<li>Features that send data to the cloud are optional and only work with your action or consent.</li>
-<li>We do not sell your personal data.</li>
+<li>The app does not use analytics tools, third-party crash reporting or advertising.</li>
+<li>We do not sell personal data.</li>
 </ul>"""),
-            ("Data that stays on your device", """<p>Reading progress, saved cards, collections, history, journal, achievements, preferences (language, font size, reminder time) and passages recorded with the scanner are stored locally on your iPhone. We cannot access this information unless you turn on a cloud backup.</p>"""),
-            ("Subscription and purchases", """<p>The Pro subscription is sold through the App Store. Apple processes the payment and only tells us the purchase status. We use RevenueCat to validate subscriptions; it receives an anonymous identifier generated by the app and the transaction data provided by Apple (product, date, expiry, store country). Legal basis: performance of a contract.</p>"""),
-            ("Reminders and notifications", """<p>Reading reminders are scheduled on the device itself. If you turn on community features, we may send notifications about interactions with your content; to do so we store a device notification token. You can turn notifications off at any time in iPhone Settings.</p>"""),
-            ("Camera and photos", """<p>The scanner uses the camera or photo library only when you tap to take or choose a picture. The photo is used to identify the Bible reference and is not sent to us, unless you turn on text recognition by an external service, described below.</p>"""),
-            ("Account, cloud backup and community (optional)", """<p>When these features are available and you choose to use them, we process: email or sign-in identifier (including Sign in with Apple), display name, profile and cover photos, the copy of your reading data, and what you post in groups or shared journeys. Posted content is visible to the participants you choose and may be moderated and reported. Legal basis: performance of a contract and consent. The data is stored with the database provider listed under “Service providers”.</p>"""),
-            ("Artificial intelligence features (optional)", """<p>Features such as text rewriting, image generation or reading text in photos (OCR) only work after your explicit consent. The content you send is processed by an AI provider solely to produce the result and is not used by us to train models. Usage limits apply, and you can turn the feature off at any time.</p>"""),
-            ("News by email", """<p>If you ask to receive news, we keep your email for that purpose. Every message has an unsubscribe link. Legal basis: consent.</p>"""),
-            ("Usage analytics and crash reports", """<p><mark class="pendente">[CONFIRM WITH DEVELOPMENT: does the app use any analytics or crash-reporting service? If yes, name it, the data collected and whether it is linked to the person. If not, write: “The app does not use third-party analytics or advertising.”]</mark></p>"""),
-            ("Service providers", """<p>We only share data with vendors needed to run the app, who process it on our instructions:</p>
+            ("Data that stays on your device", """<p>Reading progress, saved cards, collections, history, journal, achievements, preferences (language, font size, reminder time) and passages recorded with the scanner are stored only on your iPhone. This information is not sent to us.</p>"""),
+            ("Subscription and purchases", """<p>The Pro subscription is sold through the App Store. Apple processes the payment and only tells the app the purchase status. We use RevenueCat to validate subscriptions: it receives an anonymous identifier generated by the app and the transaction data provided by Apple (product, date, expiry, store country). No name, email or card data is shared with it. Legal basis: performance of a contract.</p>"""),
+            ("Reminders", """<p>Reading reminders are scheduled on the device itself, with your permission. We do not send server notifications. You can turn them off at any time in iPhone Settings.</p>"""),
+            ("Camera and photos", """<p>The scanner uses the camera or photo library only when you tap to take or choose a picture. The image is used to record the Bible reference and is not sent to us or to third parties.</p>"""),
+            ("Analytics and advertising", """<p>The app does not use usage analytics, third-party crash reporting or advertising. If you allowed analytics sharing in iPhone Settings, Apple may provide developers with aggregated, anonymous usage and crash statistics, under Apple’s privacy policy.</p>"""),
+            ("Service providers", """<p>We only share data with the vendors needed to run the app:</p>
 <ul>
-<li><strong>Apple</strong>: app distribution, payments, Sign in with Apple and notification delivery.</li>
+<li><strong>Apple</strong>: app distribution, payments and subscriptions.</li>
 <li><strong>RevenueCat</strong>: subscription validation.</li>
-<li><strong>Supabase</strong>: database and storage for account, cloud backup and community, when turned on.</li>
-<li><strong>AI provider</strong> <mark class="pendente">[NAME]</mark>: only if you turn on AI features.</li>
 </ul>
 <p>We may also share data when required by law or by order of a competent authority.</p>"""),
-            ("International transfers", """<p>Some vendors store data outside Brazil, including in the United States. In those cases we use the safeguards provided by law, such as contractual clauses.</p>"""),
-            ("How long we keep data", """<p>Local data stays on the device until you delete it or remove the app. Account data is kept while the account exists. When you delete your account, we delete or anonymize the data within 30 days, except what we must keep to meet legal obligations.</p>"""),
-            ("Your rights", f"""<p>You may request confirmation of processing, access, correction, portability, anonymization or deletion of your data, information about sharing, and withdrawal of consent. Depending on where you live (for example in the EU, UK or California), you may have similar rights under local law. You can delete your account in the app under <strong>Settings › Account › Delete account</strong>. For other requests, email {E}. You may also complain to your data protection authority.</p>"""),
-            ("Children", """<p>The app is not directed to children under 13 and does not knowingly collect their data. Account and community features require a minimum age of 13 or parental consent, as required by applicable law.</p>"""),
-            ("Security", """<p>We use encrypted connections, access controls and other reasonable measures to protect your data. No system is completely immune to failures; if a relevant incident occurs, we will notify you and the authorities as required by law.</p>"""),
-            ("Changes", """<p>We may update this policy. The date at the top shows the current version. Relevant changes will be announced in the app.</p>"""),
-            ("Contact and data protection officer", f"""<p>Data protection officer: <mark class="pendente">[DPO NAME]</mark>. Contact: {E}.</p>"""),
+            ("International transfers", """<p>Apple and RevenueCat may store purchase data outside Brazil, including in the United States, with the safeguards provided by law.</p>"""),
+            ("How long we keep data", """<p>App data stays on the device until you delete it or remove the app. Subscription records are kept by Apple and RevenueCat as long as needed for the subscription and for legal obligations.</p>"""),
+            ("Your rights", f"""<p>You may request confirmation of processing, access, correction, deletion and information about sharing of your data. Depending on where you live (for example in the EU, UK or California), you may have similar rights under local law. Because the app has no account, most information exists only on your device, and deleting the app removes it. For requests about subscription data, email {E}. You may also complain to your data protection authority.</p>"""),
+            ("Children", """<p>The app is not directed to children under 13 and does not knowingly collect their personal data.</p>"""),
+            ("Security", """<p>Purchases use Apple’s infrastructure, and communication with RevenueCat is encrypted. App data is protected by the iPhone’s own security features.</p>"""),
+            ("Changes", """<p>We may update this policy, for example if new features are released. The date at the top shows the current version, and relevant changes will be announced in the app.</p>"""),
+            ("Contact", f"""<p>Controller and contact for data requests: {RESP}. Email: {E}.</p>"""),
         ],
         "es": [
-            ("Quiénes somos", f"""<p>La aplicación {NOME[lang]} (la “app”) es ofrecida por {EMP}, registro de empresa brasileño (CNPJ) {CNPJ} (“nosotros”). Somos responsables del tratamiento de los datos personales descritos en esta política, conforme a la Ley General de Protección de Datos de Brasil (LGPD) y demás leyes aplicables.</p>"""),
+            ("Quiénes somos", f"""<p>La aplicación {NOME[lang]} (la “app”) es desarrollada y publicada por {RESP}, persona física con residencia en Brasil (“nosotros”). Somos responsables del tratamiento de los datos personales descritos en esta política, conforme a la Ley General de Protección de Datos de Brasil (LGPD) y demás leyes aplicables.</p>"""),
             ("Resumen", """<ul>
-<li>Puedes leer, escuchar, guardar y tomar notas sin crear una cuenta. Esos datos quedan en tu dispositivo.</li>
+<li>La app no tiene registro ni cuenta. Puedes leer, escuchar, guardar y tomar notas sin dar tu nombre ni tu correo.</li>
+<li>Lo que haces en la app se guarda en tu dispositivo.</li>
 <li>Los pagos los procesa Apple. Nunca recibimos el número de tu tarjeta.</li>
-<li>Las funciones que envían datos a la nube son opcionales y solo funcionan con tu acción o consentimiento.</li>
-<li>No vendemos tus datos personales.</li>
+<li>La app no usa herramientas de métricas, informes de fallos de terceros ni publicidad.</li>
+<li>No vendemos datos personales.</li>
 </ul>"""),
-            ("Datos que quedan en tu dispositivo", """<p>El progreso de lectura, tarjetas guardadas, colecciones, historial, diario, logros, preferencias (idioma, tamaño de letra, hora de recordatorios) y pasajes registrados con el escáner se guardan localmente en el iPhone. No tenemos acceso a esa información a menos que actives una copia en la nube.</p>"""),
-            ("Suscripción y compras", """<p>La suscripción Pro se vende a través de la App Store. Apple procesa el pago y solo nos informa el estado de la compra. Usamos RevenueCat para validar suscripciones; recibe un identificador anónimo generado por la app y los datos de la transacción proporcionados por Apple (producto, fecha, vencimiento, país de la tienda). Base legal: ejecución de contrato.</p>"""),
-            ("Recordatorios y notificaciones", """<p>Los recordatorios de lectura se programan en el propio dispositivo. Si activas funciones de comunidad, podemos enviarte notificaciones sobre interacciones con tu contenido; para ello guardamos un token de notificación del dispositivo. Puedes desactivar las notificaciones en cualquier momento en los Ajustes del iPhone.</p>"""),
-            ("Cámara y fotos", """<p>El escáner usa la cámara o la galería solo cuando tocas para tomar o elegir una imagen. La foto sirve para identificar la referencia bíblica y no se nos envía, salvo que actives el reconocimiento de texto por un servicio externo, descrito abajo.</p>"""),
-            ("Cuenta, copia en la nube y comunidad (opcionales)", """<p>Cuando estas funciones estén disponibles y decidas usarlas, trataremos: correo o identificador de inicio de sesión (incluido “Iniciar sesión con Apple”), nombre visible, foto de perfil y portada, la copia de tus datos de lectura y lo que publiques en grupos o recorridos compartidos. El contenido publicado es visible para los participantes que elijas y puede ser moderado y denunciado. Base legal: ejecución de contrato y consentimiento. Los datos se almacenan en el proveedor de base de datos indicado en “Proveedores de servicios”.</p>"""),
-            ("Funciones de inteligencia artificial (opcionales)", """<p>Funciones como reescritura de texto, generación de imágenes o lectura de texto en fotos (OCR) solo funcionan después de tu consentimiento explícito. El contenido que envíes lo procesa un proveedor de IA únicamente para generar el resultado y no lo usamos para entrenar modelos. Hay límites de uso y puedes desactivar la función en cualquier momento.</p>"""),
-            ("Novedades por correo", """<p>Si pides recibir novedades, guardaremos tu correo con ese fin. Cada mensaje incluye un enlace para darte de baja. Base legal: consentimiento.</p>"""),
-            ("Métricas de uso e informes de errores", """<p><mark class="pendente">[CONFIRMAR CON DESARROLLO: ¿la app usa algún servicio de métricas o de informes de fallos? Si sí, nombrarlo, indicar los datos recogidos y si se vinculan a la persona. Si no, escribir: “La app no usa herramientas de métricas de terceros ni publicidad.”]</mark></p>"""),
-            ("Proveedores de servicios", """<p>Solo compartimos datos con proveedores necesarios para el funcionamiento de la app, que los tratan según nuestras instrucciones:</p>
+            ("Datos que quedan en tu dispositivo", """<p>El progreso de lectura, tarjetas guardadas, colecciones, historial, diario, logros, preferencias (idioma, tamaño de letra, hora de recordatorios) y pasajes registrados con el escáner se guardan solo en el iPhone. Esa información no se nos envía.</p>"""),
+            ("Suscripción y compras", """<p>La suscripción Pro se vende a través de la App Store. Apple procesa el pago y solo informa a la app el estado de la compra. Usamos RevenueCat para validar suscripciones: recibe un identificador anónimo generado por la app y los datos de la transacción proporcionados por Apple (producto, fecha, vencimiento, país de la tienda). No se comparte con él ningún nombre, correo ni dato de tarjeta. Base legal: ejecución de contrato.</p>"""),
+            ("Recordatorios", """<p>Los recordatorios de lectura se programan en el propio dispositivo, con tu permiso. No enviamos notificaciones desde un servidor. Puedes desactivarlas en cualquier momento en los Ajustes del iPhone.</p>"""),
+            ("Cámara y fotos", """<p>El escáner usa la cámara o la galería solo cuando tocas para tomar o elegir una imagen. La imagen sirve para registrar la referencia bíblica y no se nos envía a nosotros ni a terceros.</p>"""),
+            ("Métricas y publicidad", """<p>La app no usa métricas de uso, informes de fallos de terceros ni publicidad. Si autorizaste compartir análisis en los Ajustes del iPhone, Apple puede proporcionar a los desarrolladores estadísticas agregadas y anónimas de uso y de fallos, según la política de privacidad de Apple.</p>"""),
+            ("Proveedores de servicios", """<p>Solo compartimos datos con los proveedores necesarios para el funcionamiento de la app:</p>
 <ul>
-<li><strong>Apple</strong>: distribución de la app, pagos, inicio de sesión con Apple y envío de notificaciones.</li>
+<li><strong>Apple</strong>: distribución de la app, pagos y suscripciones.</li>
 <li><strong>RevenueCat</strong>: validación de suscripciones.</li>
-<li><strong>Supabase</strong>: base de datos y almacenamiento de cuenta, copia en la nube y comunidad, cuando se activan.</li>
-<li><strong>Proveedor de IA</strong> <mark class="pendente">[NOMBRE]</mark>: solo si activas funciones de IA.</li>
 </ul>
 <p>También podemos compartir datos cuando lo exija la ley o una autoridad competente.</p>"""),
-            ("Transferencias internacionales", """<p>Algunos proveedores almacenan datos fuera de Brasil, incluso en Estados Unidos. En esos casos adoptamos las salvaguardas previstas por la ley, como cláusulas contractuales.</p>"""),
-            ("Cuánto tiempo guardamos los datos", """<p>Los datos locales permanecen en el dispositivo hasta que los borres o elimines la app. Los datos de cuenta se conservan mientras la cuenta exista. Al eliminar la cuenta, borramos o anonimizamos los datos en un plazo de 30 días, salvo lo que debamos conservar para cumplir obligaciones legales.</p>"""),
-            ("Tus derechos", f"""<p>Puedes solicitar confirmación del tratamiento, acceso, corrección, portabilidad, anonimización o eliminación de tus datos, información sobre su uso compartido y la revocación del consentimiento. Según dónde vivas, puedes tener derechos similares bajo la ley local. Puedes eliminar tu cuenta en la app, en <strong>Ajustes › Cuenta › Eliminar cuenta</strong>. Para otras solicitudes, escribe a {E}. También puedes presentar una reclamación ante tu autoridad de protección de datos.</p>"""),
-            ("Niños", """<p>La app no está dirigida a menores de 13 años y no recoge intencionalmente sus datos. Las funciones de cuenta y comunidad exigen una edad mínima de 13 años o autorización de los padres, según la ley aplicable.</p>"""),
-            ("Seguridad", """<p>Usamos conexiones cifradas, control de acceso y otras medidas razonables para proteger tus datos. Ningún sistema es totalmente inmune a fallos; si ocurre un incidente relevante, te avisaremos a ti y a las autoridades conforme a la ley.</p>"""),
-            ("Cambios", """<p>Podemos actualizar esta política. La fecha en la parte superior indica la versión vigente. Los cambios relevantes se anunciarán en la app.</p>"""),
-            ("Contacto y delegado de protección de datos", f"""<p>Delegado de protección de datos: <mark class="pendente">[NOMBRE DEL DELEGADO]</mark>. Contacto: {E}.</p>"""),
+            ("Transferencias internacionales", """<p>Apple y RevenueCat pueden almacenar los datos de compra fuera de Brasil, incluso en Estados Unidos, con las salvaguardas previstas por la ley.</p>"""),
+            ("Cuánto tiempo guardamos los datos", """<p>Los datos de la app permanecen en el dispositivo hasta que los borres o elimines la app. Los registros de suscripción los conservan Apple y RevenueCat mientras sean necesarios para la suscripción y para obligaciones legales.</p>"""),
+            ("Tus derechos", f"""<p>Puedes solicitar confirmación del tratamiento, acceso, corrección, eliminación e información sobre el uso compartido de tus datos. Según dónde vivas, puedes tener derechos similares bajo la ley local. Como la app no tiene cuenta, la mayor parte de la información está solo en tu dispositivo y borrar la app la elimina. Para solicitudes sobre datos de suscripción, escribe a {E}. También puedes presentar una reclamación ante tu autoridad de protección de datos.</p>"""),
+            ("Niños", """<p>La app no está dirigida a menores de 13 años y no recoge intencionalmente sus datos personales.</p>"""),
+            ("Seguridad", """<p>Las compras usan la infraestructura de Apple y la comunicación con RevenueCat está cifrada. Los datos de la app están protegidos por las funciones de seguridad del propio iPhone.</p>"""),
+            ("Cambios", """<p>Podemos actualizar esta política, por ejemplo si se lanzan nuevas funciones. La fecha en la parte superior indica la versión vigente y los cambios relevantes se anunciarán en la app.</p>"""),
+            ("Contacto", f"""<p>Responsable del tratamiento y contacto para solicitudes: {RESP}. Correo: {E}.</p>"""),
         ],
     }[lang]
     titulo = {"pt": "Política de Privacidade", "en": "Privacy Policy", "es": "Política de Privacidad"}[lang]
-    sumario_t = {"pt": "Nesta página", "en": "On this page", "es": "En esta página"}[lang]
-    return _documento(lang, titulo, secoes, sumario_t)
-
-
-# ---------------------------------------------------------------------------
-# Conteúdo: termos de uso
-# ---------------------------------------------------------------------------
-def termos(lang):
-    E, EMP, CNPJ, FORO = EMAIL(lang), P("empresa", lang), P("cnpj", lang), P("cidade_foro", lang)
-    priv = PAGINAS["privacidade"][lang]
-    secoes = {
-        "pt": [
-            ("Aceitação", f"""<p>Estes Termos de Uso regulam o uso do aplicativo {NOME[lang]} (“app”), oferecido por {EMP}, CNPJ {CNPJ} (“nós”). Ao usar o app, você concorda com estes termos e com a <a href="{priv}">Política de Privacidade</a>. Se não concordar, não use o app.</p>"""),
-            ("O que o app oferece", """<p>O app oferece microlições bíblicas, consulta ao texto bíblico, áudio, vídeos, ferramentas de estudo pessoal e, quando disponíveis, recursos de conta, comunidade e inteligência artificial. Podemos alterar, incluir ou retirar funcionalidades para melhorar o serviço.</p>"""),
-            ("Conteúdo bíblico e interpretações", """<p>Buscamos separar com clareza o texto bíblico, a interpretação e a informação histórica. As lições refletem uma leitura cristã ampla e não representam a posição oficial de nenhuma igreja ou denominação. Os vídeos são representações artísticas criadas com auxílio de inteligência artificial e podem conter paráfrases, sempre identificadas.</p>
-<p>Traduções bíblicas de terceiros são usadas conforme suas licenças, indicadas no próprio app. Exemplo: Bíblia Livre (BLIVRE), © 2018 Diego Santos, Mario Sérgio e Marco Teles, licença Creative Commons Atribuição 4.0 Brasil.</p>
-<p>O conteúdo do app tem finalidade de estudo e reflexão e não substitui aconselhamento pastoral, psicológico, médico ou jurídico.</p>"""),
-            ("Assinatura Pro", """<ul>
-<li>Parte do conteúdo exige a assinatura Pro, vendida pela App Store e cobrada na sua conta Apple na confirmação da compra.</li>
-<li>A assinatura renova automaticamente pelo mesmo período e preço, salvo se for cancelada até 24 horas antes do fim do período vigente.</li>
-<li>Você gerencia e cancela a assinatura em <strong>Ajustes do iPhone › [seu nome] › Assinaturas</strong>. O cancelamento vale a partir do período seguinte; o acesso continua até o fim do período pago.</li>
-<li>Se houver período de teste gratuito, a parte não utilizada é perdida quando você assina.</li>
-<li>Preços aparecem na loja antes da compra e podem variar por país. Reembolsos seguem as regras da Apple.</li>
-</ul>"""),
-            ("Conta e comunidade", """<p>Se você criar uma conta, mantenha seus dados de acesso seguros e informe dados verdadeiros. Em grupos, jornadas compartilhadas e demais áreas sociais, você se compromete a não publicar conteúdo ilegal, ofensivo, discriminatório, enganoso, sexual, violento, spam ou que viole direitos de terceiros. Podemos remover conteúdos e suspender contas que descumpram estas regras. Use a opção de denúncia para nos avisar. Você continua dono do que publica e nos autoriza a exibir esse conteúdo dentro do app para os participantes escolhidos.</p>"""),
-            ("Uso permitido", """<p>O app é para uso pessoal e não comercial. Não é permitido copiar, revender, extrair conteúdo em massa, fazer engenharia reversa, contornar a assinatura ou usar o app para fins ilegais.</p>"""),
-            ("Propriedade intelectual", """<p>Marca, logotipo, textos originais, ilustrações, vídeos, áudios e o software do app pertencem a nós ou a nossos licenciadores e são protegidos por lei. O uso do app não transfere esses direitos a você.</p>"""),
-            ("Isenções e responsabilidade", """<p>O app é oferecido “no estado em que se encontra”. Trabalhamos para que funcione bem, mas não garantimos que estará livre de erros ou disponível o tempo todo. Na medida permitida pela lei, não nos responsabilizamos por danos indiretos decorrentes do uso do app. Nada nestes termos limita direitos garantidos pelo Código de Defesa do Consumidor.</p>"""),
-            ("Encerramento", """<p>Você pode parar de usar o app e excluir sua conta a qualquer momento. Podemos encerrar o acesso de quem violar estes termos.</p>"""),
-            ("Termos da Apple", """<p>Para apps baixados pela App Store, também se aplica o Contrato de Licença de Usuário Final padrão da Apple. A Apple não é responsável pelo app nem pelo seu suporte.</p>"""),
-            ("Lei aplicável e alterações", f"""<p>Estes termos são regidos pelas leis do Brasil. Fica eleito o foro da comarca de {FORO}, ressalvado o direito do consumidor de propor ação no foro do seu domicílio. Podemos atualizar estes termos; mudanças relevantes serão avisadas no app.</p>"""),
-            ("Contato", f"""<p>Dúvidas sobre estes termos: {E}.</p>"""),
-        ],
-        "en": [
-            ("Acceptance", f"""<p>These Terms of Use govern your use of the {NOME[lang]} app (the “app”), provided by {EMP}, Brazilian company registration (CNPJ) {CNPJ} (“we”, “us”). By using the app you agree to these terms and to the <a href="{priv}">Privacy Policy</a>. If you do not agree, do not use the app.</p>"""),
-            ("What the app offers", """<p>The app offers Bible micro-lessons, access to the Bible text, audio, videos, personal study tools and, when available, account, community and artificial intelligence features. We may change, add or remove features to improve the service.</p>"""),
-            ("Bible content and interpretation", """<p>We aim to clearly separate the Bible text, interpretation and historical information. Lessons reflect a broad Christian reading and do not represent the official position of any church or denomination. Videos are artistic representations created with the help of artificial intelligence and may contain paraphrases, which are always identified.</p>
-<p>Third-party Bible translations are used under their licenses, which are shown in the app. Example: Bíblia Livre (BLIVRE), © 2018 Diego Santos, Mario Sérgio and Marco Teles, Creative Commons Attribution 4.0 Brazil license.</p>
-<p>App content is meant for study and reflection and does not replace pastoral, psychological, medical or legal advice.</p>"""),
-            ("Pro subscription", """<ul>
-<li>Some content requires the Pro subscription, sold through the App Store and charged to your Apple account when you confirm the purchase.</li>
-<li>The subscription renews automatically for the same period and price unless cancelled at least 24 hours before the end of the current period.</li>
-<li>You manage and cancel it in <strong>iPhone Settings › [your name] › Subscriptions</strong>. Cancellation applies from the next period; access continues until the end of the paid period.</li>
-<li>If a free trial is offered, any unused portion is forfeited when you subscribe.</li>
-<li>Prices are shown in the store before purchase and may vary by country. Refunds follow Apple’s rules.</li>
-</ul>"""),
-            ("Account and community", """<p>If you create an account, keep your sign-in details secure and provide accurate information. In groups, shared journeys and other social areas, you agree not to post content that is illegal, offensive, discriminatory, misleading, sexual, violent, spam or that infringes the rights of others. We may remove content and suspend accounts that break these rules. Use the report option to let us know. You keep ownership of what you post and allow us to display it in the app to the participants you choose.</p>"""),
-            ("Permitted use", """<p>The app is for personal, non-commercial use. You may not copy, resell, bulk-extract content, reverse engineer, bypass the subscription or use the app for unlawful purposes.</p>"""),
-            ("Intellectual property", """<p>The brand, logo, original texts, illustrations, videos, audio and software belong to us or our licensors and are protected by law. Using the app does not transfer these rights to you.</p>"""),
-            ("Disclaimers and liability", """<p>The app is provided “as is”. We work to keep it running well but do not guarantee it will be error-free or always available. To the extent permitted by law, we are not liable for indirect damages arising from use of the app. Nothing in these terms limits rights you have under consumer protection law.</p>"""),
-            ("Termination", """<p>You may stop using the app and delete your account at any time. We may terminate access for anyone who breaches these terms.</p>"""),
-            ("Apple terms", """<p>For apps downloaded from the App Store, Apple’s standard Licensed Application End User License Agreement also applies. Apple is not responsible for the app or its support.</p>"""),
-            ("Governing law and changes", f"""<p>These terms are governed by the laws of Brazil, with venue in {FORO}, without prejudice to any mandatory consumer rights in your country of residence. We may update these terms; relevant changes will be announced in the app.</p>"""),
-            ("Contact", f"""<p>Questions about these terms: {E}.</p>"""),
-        ],
-        "es": [
-            ("Aceptación", f"""<p>Estos Términos de Uso regulan el uso de la app {NOME[lang]} (la “app”), ofrecida por {EMP}, registro de empresa brasileño (CNPJ) {CNPJ} (“nosotros”). Al usar la app aceptas estos términos y la <a href="{priv}">Política de Privacidad</a>. Si no estás de acuerdo, no uses la app.</p>"""),
-            ("Qué ofrece la app", """<p>La app ofrece microlecciones bíblicas, consulta del texto bíblico, audio, videos, herramientas de estudio personal y, cuando estén disponibles, funciones de cuenta, comunidad e inteligencia artificial. Podemos cambiar, añadir o retirar funciones para mejorar el servicio.</p>"""),
-            ("Contenido bíblico e interpretación", """<p>Buscamos separar con claridad el texto bíblico, la interpretación y la información histórica. Las lecciones reflejan una lectura cristiana amplia y no representan la posición oficial de ninguna iglesia o denominación. Los videos son representaciones artísticas creadas con ayuda de inteligencia artificial y pueden contener paráfrasis, siempre identificadas.</p>
-<p>Las traducciones bíblicas de terceros se usan conforme a sus licencias, indicadas en la app. Ejemplo: Bíblia Livre (BLIVRE), © 2018 Diego Santos, Mario Sérgio y Marco Teles, licencia Creative Commons Atribución 4.0 Brasil.</p>
-<p>El contenido de la app es para estudio y reflexión y no sustituye el consejo pastoral, psicológico, médico o jurídico.</p>"""),
-            ("Suscripción Pro", """<ul>
-<li>Parte del contenido requiere la suscripción Pro, vendida a través de la App Store y cobrada en tu cuenta de Apple al confirmar la compra.</li>
-<li>La suscripción se renueva automáticamente por el mismo período y precio, salvo que se cancele al menos 24 horas antes del final del período vigente.</li>
-<li>La gestionas y cancelas en <strong>Ajustes del iPhone › [tu nombre] › Suscripciones</strong>. La cancelación aplica desde el período siguiente; el acceso continúa hasta el final del período pagado.</li>
-<li>Si se ofrece una prueba gratuita, la parte no utilizada se pierde al suscribirte.</li>
-<li>Los precios se muestran en la tienda antes de la compra y pueden variar por país. Los reembolsos siguen las reglas de Apple.</li>
-</ul>"""),
-            ("Cuenta y comunidad", """<p>Si creas una cuenta, mantén seguros tus datos de acceso e informa datos verdaderos. En grupos, recorridos compartidos y demás áreas sociales, te comprometes a no publicar contenido ilegal, ofensivo, discriminatorio, engañoso, sexual, violento, spam o que viole derechos de terceros. Podemos retirar contenidos y suspender cuentas que incumplan estas reglas. Usa la opción de denuncia para avisarnos. Sigues siendo dueño de lo que publicas y nos autorizas a mostrarlo en la app a los participantes que elijas.</p>"""),
-            ("Uso permitido", """<p>La app es para uso personal y no comercial. No está permitido copiar, revender, extraer contenido de forma masiva, hacer ingeniería inversa, eludir la suscripción ni usar la app con fines ilegales.</p>"""),
-            ("Propiedad intelectual", """<p>La marca, el logotipo, los textos originales, ilustraciones, videos, audios y el software nos pertenecen a nosotros o a nuestros licenciantes y están protegidos por la ley. El uso de la app no te transfiere esos derechos.</p>"""),
-            ("Exenciones y responsabilidad", """<p>La app se ofrece “tal cual”. Trabajamos para que funcione bien, pero no garantizamos que esté libre de errores ni disponible en todo momento. En la medida permitida por la ley, no somos responsables de daños indirectos derivados del uso de la app. Nada en estos términos limita los derechos que te otorga la ley de protección al consumidor.</p>"""),
-            ("Terminación", """<p>Puedes dejar de usar la app y eliminar tu cuenta en cualquier momento. Podemos cancelar el acceso de quien incumpla estos términos.</p>"""),
-            ("Términos de Apple", """<p>Para apps descargadas desde la App Store, también se aplica el Contrato de Licencia de Usuario Final estándar de Apple. Apple no es responsable de la app ni de su soporte.</p>"""),
-            ("Ley aplicable y cambios", f"""<p>Estos términos se rigen por las leyes de Brasil, con foro en {FORO}, sin perjuicio de los derechos imperativos del consumidor en tu país de residencia. Podemos actualizar estos términos; los cambios relevantes se anunciarán en la app.</p>"""),
-            ("Contacto", f"""<p>Dudas sobre estos términos: {E}.</p>"""),
-        ],
-    }[lang]
-    titulo = {"pt": "Termos de Uso", "en": "Terms of Use", "es": "Términos de Uso"}[lang]
     sumario_t = {"pt": "Nesta página", "en": "On this page", "es": "En esta página"}[lang]
     return _documento(lang, titulo, secoes, sumario_t)
 
@@ -580,7 +487,7 @@ def pagina(lang, chave, title, desc, corpo):
     nav = "".join(
         f'<a href="{PAGINAS[k][lang]}"{cur_pg if k == chave else ""}'
         f'{so_desk if k == "home" else ""}>{u["nav"][k]}</a>'
-        for k in ("home", "suporte", "privacidade", "termos"))
+        for k in ("home", "suporte", "privacidade"))
     idiomas = "".join(
         f'<a href="../{l}/{PAGINAS[chave][l]}" hreflang="{LANG_ATTR[l]}" lang="{LANG_ATTR[l]}"'
         f'{cur_on if l == lang else ""}>{l.upper()}</a>' for l in ("pt", "en", "es"))
@@ -591,7 +498,7 @@ def pagina(lang, chave, title, desc, corpo):
         alternates = "".join(
             f'<link rel="alternate" hreflang="{LANG_ATTR[l]}" href="https://{dom}/{l}/{PAGINAS[chave][l]}">'
             for l in ("pt", "en", "es"))
-    rod_links = "".join(f'<a href="{PAGINAS[k][lang]}">{u["nav"][k]}</a>' for k in ("suporte", "privacidade", "termos"))
+    rod_links = "".join(f'<a href="{PAGINAS[k][lang]}">{u["nav"][k]}</a>' for k in ("suporte", "privacidade")) + f'<a href="{EULA}">{u["nav"]["termos"]}</a>'
     return f"""<!doctype html>
 <html lang="{LANG_ATTR[lang]}">
 <head>
@@ -669,12 +576,19 @@ RAIZ = """<!doctype html>
 def main():
     for lang in ("pt", "en", "es"):
         (ROOT / lang).mkdir(parents=True, exist_ok=True)
-        for chave, fn in (("home", home), ("suporte", suporte), ("privacidade", privacidade), ("termos", termos)):
+        for chave, fn in (("home", home), ("suporte", suporte), ("privacidade", privacidade)):
             title, desc, corpo = fn(lang)
             (ROOT / lang / PAGINAS[chave][lang]).write_text(pagina(lang, chave, title, desc, corpo), encoding="utf-8")
     (ROOT / "index.html").write_text(RAIZ, encoding="utf-8")
     pend = sum(p.read_text(encoding="utf-8").count('class="pendente"') for p in ROOT.rglob("*.html"))
+    redirects = "".join(f"/{l}/{f} {EULA} 301\n/{l}/{f.replace('.html', '')} {EULA} 301\n"
+                        for l, f in (("pt", "termos.html"), ("en", "terms.html"), ("es", "terminos.html")))
+    (ROOT / "_redirects").write_text(redirects, encoding="utf-8")
+    for l, f in (("pt", "termos.html"), ("en", "terms.html"), ("es", "terminos.html")):
+        (ROOT / l / f).unlink(missing_ok=True)
     print(f"Site gerado em {ROOT}  ·  {pend} marcações de pendência a preencher")
+    if pend:
+        raise SystemExit("ATENÇÃO: há campos pendentes (em amarelo). Preencha o CONFIG antes de enviar à Apple.")
 
 
 if __name__ == "__main__":
