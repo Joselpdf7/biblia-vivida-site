@@ -13,7 +13,7 @@ import html
 # ---------------------------------------------------------------------------
 CONFIG = {
     "dominio": "vividbible.app",  # domínio principal (sem https://); bibliavivida.com abre em PT
-    "email": "",            # ex.: suporte@bibliavivida.app
+    "email": "support@vividbible.app",  # encaminha (Cloudflare Email Routing) para a caixa da equipe
     "empresa": "",          # razão social de quem publica o app (titular da conta Apple)
     "cnpj": "",             # CNPJ da empresa
     "cidade_foro": "",      # ex.: São Paulo/SP
