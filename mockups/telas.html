@@ -1,0 +1,103 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=440">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#16191c;--mut:#5f6872;--chip:#eef1f4;--btn:#263b45;--line:#dfe3e7}
+*{box-sizing:border-box;margin:0}
+html,body{width:440px;height:956px;overflow:hidden;background:#fff;color:var(--ink);font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif;-webkit-font-smoothing:antialiased}
+.tela{position:relative;width:440px;height:956px;padding:0 24px;display:flow-root}
+.serif{font-family:Lora,Georgia,serif;font-weight:700;letter-spacing:-.01em}
+.voltar{position:absolute;top:28px;left:24px;font-size:24px;line-height:1}
+svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* leitor */
+.topo{display:flex;align-items:center;height:68px;gap:14px}
+.topo .x{font-size:22px;width:28px}.topo .livro{flex:1;font-weight:600;font-size:17px}.topo .pg{color:var(--mut);font-size:16px}.topo .aa{font-weight:700;font-size:17px;margin-left:10px}.topo .mais{font-size:20px;letter-spacing:1px;margin-left:12px}
+.abas{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:20px}
+.abas div{border-top:4px solid #e3e6ea;padding-top:8px;font-size:14px;color:var(--mut)}
+.abas div.on{border-color:#2a3236;color:var(--ink)}
+.icone{font-size:46px;margin:34px 0 20px 10px}
+h1.serif{font-size:30px;line-height:1.25}
+.cont{color:var(--mut);font-size:16px;margin:22px 0 18px}
+.corpo{font-size:18px;line-height:1.7}
+.rodape{position:absolute;left:18px;right:18px;bottom:20px;background:#fbfbfb;border-radius:22px;padding:18px 14px 12px}
+.acoes{display:flex;justify-content:space-around;margin-bottom:16px}
+.botoes{display:flex;gap:14px}
+.voltar-b{width:62px;height:56px;border-radius:16px;background:var(--chip);display:grid;place-items:center;font-size:22px}
+.btn{background:var(--btn);color:#fff;border-radius:18px;height:56px;display:grid;place-items:center;font-weight:700;font-size:18px;flex:1}
+/* salmos */
+.rot{margin-top:84px;color:var(--mut);font-weight:600;font-size:15px;letter-spacing:.04em}
+.salmos h1{font-size:31px;margin-top:4px}
+.harpa{width:180px;margin:46px auto 30px;display:block}
+.sub{font-family:Lora,Georgia,serif;font-weight:700;font-size:21px;line-height:1.4}
+.chipb{background:var(--chip);border-radius:16px;height:56px;display:grid;place-items:center;font-weight:600;font-size:17px;margin-top:24px}
+.stats{display:grid;grid-template-columns:90px 1fr 90px;gap:12px;margin-top:24px}
+.stats div{background:var(--chip);border-radius:18px;padding:16px 18px;height:92px}
+.stats b{font-family:Lora,Georgia,serif;font-size:24px;display:block;line-height:1.2}
+.stats span{color:var(--mut);font-size:14.5px}
+.ideias{margin:26px 0 22px;font-size:17px}
+/* video */
+.video h1{font-size:30px;margin-top:84px;line-height:1.25}
+.video h2{font-family:Lora,Georgia,serif;font-weight:700;font-size:21px;margin:22px 0 22px}
+.quadro{height:600px;border-radius:20px;overflow:hidden;background:#222}
+.quadro img{width:100%;height:100%;object-fit:cover;object-position:50% 28%}
+.video .btn{position:absolute;left:24px;right:24px;bottom:20px;flex:none}
+/* scanner */
+.scan h1{font-size:30px;margin-top:84px;line-height:1.25}
+.scan p.int{margin:18px 0 22px;font-size:17px;line-height:1.7}
+.duas{display:flex;gap:12px}
+.duas div{height:56px;border-radius:18px;display:grid;place-items:center;font-weight:700;font-size:17px;padding:0 18px}
+.duas .a{background:var(--btn);color:#fff}.duas .b{background:var(--chip)}
+.campo{border:2px solid #4a6fd1;border-radius:16px;height:62px;margin-top:22px;padding:0 16px;display:flex;align-items:center;font-size:18px}
+.campo i{display:inline-block;width:1.5px;height:24px;background:var(--ink);margin-left:2px}
+.cartao{background:#f1f3f5;border-radius:22px;padding:22px 22px 6px;margin-top:22px}
+.cartao h3{font-family:Lora,Georgia,serif;font-weight:700;font-size:21px;margin-bottom:12px}
+.cartao .v{font-size:17px;line-height:1.7}
+.cartao .cred{color:var(--mut);font-weight:600;font-size:14.5px;line-height:1.5;margin:14px 0 18px}
+.cartao .btn{height:54px;font-size:17px;flex:none}
+.cartao .l{text-align:center;font-weight:700;font-size:17px;padding:22px 0 8px}
+</style></head><body>
+<div id="app"></div>
+<script>
+const q=new URLSearchParams(location.search), L=q.get('lang')||'en', S=q.get('tela')||'leitor';
+const T={
+ en:{livro:'Proverbs',abas:['The scene','Reveal','Take away','Practice'],titulo:'Wisdom begins with reverence',
+  corpo:'This principle doesn’t demand panic or ready answers for every decision. It points life beyond pride and self-sufficiency. In Proverbs, <b>learning includes listening, noticing consequences</b> and <b>accepting correction</b>. Wisdom begins with a posture of respect before God and openness to learn from what we don’t yet know.',
+  cont:'Continue',rot:'Books of the Bible',salmos:'Psalms',sub:'The Bible’s book of prayers: trust, tears and praise.',ouvir:'Listen in order',ctx:'Context and tradition',
+  st:['Ideas','Minutes per idea','Read'],ideias:'8 ideas to read and practice',pro:'Unlock with Pro',
+  vt:'Stories to watch and hear.',ve:'Frogs even in his bed · 034',pausa:'Pause',
+  st1:'From the page to life.',si:'Take a photo of the reference in your Bible or type the book, chapter and verse. Check the result before saving.',
+  foto:'Photograph page',esc:'Choose photo',ref:'Hebrews 12:15',
+  verso:'Look carefully lest there be any man who falls short of the grace of God, lest any root of bitterness springing up trouble you, and many be defiled by it.',
+  cred:'World English Bible (WEB) · Public domain.',conf:'Confirm and save passage',l1:'Watch out for bitterness',l2:'Write a reflection'},
+ es:{livro:'Proverbios',abas:['La escena','Revelar','Llevar','Practicar'],titulo:'La sabiduría comienza con reverencia',
+  corpo:'Este principio no exige pánico ni respuestas listas para cada decisión. Orienta la vida más allá del orgullo y la autosuficiencia. En Proverbios, <b>aprender incluye escuchar, observar las consecuencias</b> y <b>aceptar la corrección</b>. La sabiduría comienza con una actitud de respeto ante Dios y de apertura para aprender de lo que aún no sabemos.',
+  cont:'Continuar',rot:'Libros de la Biblia',salmos:'Salmos',sub:'El libro de oraciones de la Biblia: confianza, lágrimas y alabanza.',ouvir:'Escuchar en secuencia',ctx:'Contexto y tradición',
+  st:['Ideas','Minutos por idea','Leídas'],ideias:'8 ideas para leer y practicar',pro:'Desbloquea con Pro',
+  vt:'Historias para ver y escuchar.',ve:'Ranas hasta en su cama · 034',pausa:'Pausar',
+  st1:'De la página a la vida.',si:'Fotografía la referencia de tu Biblia o escribe libro, capítulo y versículo. Revisa el resultado antes de guardar.',
+  foto:'Fotografiar página',esc:'Elegir foto',ref:'Hebreos 12:15',
+  verso:'Mirando bien que ninguno se aparte de la gracia de Dios, que ninguna raíz de amargura brotando os impida, y por ella muchos sean contaminados.',
+  cred:'Reina-Valera 1909 · Dominio público.',conf:'Confirmar y guardar pasaje',l1:'Cuidado con la amargura',l2:'Escribir una reflexión'}
+}[L];
+const ic={
+ mark:'<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>',
+ pasta:'<svg viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 10v6M9 13h6"/></svg>',
+ som:'<svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>',
+ share:'<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"/></svg>'};
+const telas={
+ leitor:`<div class="tela"><div class="topo"><span class="x">✕</span><span class="livro">${T.livro}</span><span class="pg">1 / 8</span><span class="aa">Aa</span><span class="mais">•••</span></div>
+  <div class="abas">${T.abas.map((a,i)=>`<div class="${i==0?'on':''}">${a}</div>`).join('')}</div>
+  <div class="icone">🪔</div><h1 class="serif">${T.titulo}</h1><div class="cont">2 / 2</div><p class="corpo">${T.corpo}</p>
+  <div class="rodape"><div class="acoes">${ic.mark}${ic.pasta}${ic.som}${ic.share}</div><div class="botoes"><div class="voltar-b">←</div><div class="btn">${T.cont}</div></div></div></div>`,
+ salmos:`<div class="tela salmos"><span class="voltar">←</span><div class="rot">${T.rot}</div><h1 class="serif">${T.salmos}</h1>
+  <img class="harpa" src="harpa.png"><p class="sub">${T.sub}</p><div class="chipb">${T.ouvir}</div><div class="chipb">${T.ctx}</div>
+  <div class="stats"><div><b>8</b><span>${T.st[0]}</span></div><div><b>4–5</b><span>${T.st[1]}</span></div><div><b>0/8</b><span>${T.st[2]}</span></div></div>
+  <p class="ideias">${T.ideias}</p><div class="btn" style="flex:none">${T.pro}</div></div>`,
+ video:`<div class="tela video"><span class="voltar">←</span><h1 class="serif">${T.vt}</h1><h2>${T.ve}</h2><div class="quadro"><img src="cena-034.jpg"></div><div class="btn">${T.pausa}</div></div>`,
+ scanner:`<div class="tela scan"><span class="voltar">←</span><h1 class="serif">${T.st1}</h1><p class="int">${T.si}</p>
+  <div class="duas"><div class="a">${T.foto}</div><div class="b">${T.esc}</div></div><div class="campo">${T.ref}<i></i></div>
+  <div class="cartao"><h3>${T.ref}</h3><p class="v">${T.verso}</p><p class="cred">${T.cred}</p><div class="btn">${T.conf}</div><div class="l">${T.l1}</div><div class="l">${T.l2}</div></div></div>`
+};
+document.getElementById('app').innerHTML=telas[S];
+</script></body></html>

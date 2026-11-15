@@ -195,6 +195,7 @@ def home(lang):
         ),
     }[lang]
     u = UI[lang]
+    IM = lambda n: n if lang == "pt" else n.replace(".jpg", f"-{lang}.jpg")  # prints traduzidos em EN/ES
 
     if CONFIG["app_store_url"].strip():
         cta = f'<a class="botao" href="{html.escape(CONFIG["app_store_url"])}">{u["baixar"]}</a>'
@@ -204,7 +205,7 @@ def home(lang):
     assin = f'<p class="assinatura">{T["assinatura"]}</p>' if T["assinatura"] else ""
     passos = "".join(f'<div class="passo"><h3>{a}</h3><p>{b}</p></div>' for a, b in T["passos"])
     telas = "".join(
-        f'<div class="tela"><figure><div class="aparelho"><img src="../assets/img/{img}" alt="{cap}" width="440" height="956" loading="lazy"></div>'
+        f'<div class="tela"><figure><div class="aparelho"><img src="../assets/img/{IM(img)}" alt="{cap}" width="440" height="956" loading="lazy"></div>'
         f'<figcaption>{cap}</figcaption></figure></div>' for img, cap in T["telas"])
     recursos = "".join(
         f'<div class="recurso"><div class="icone" aria-hidden="true">{ICONES[ic]}</div><h3>{a}</h3><p>{b}</p></div>'
@@ -230,9 +231,9 @@ def home(lang):
     <p class="selo">{T["selo"]}</p>
   </div>
   <div class="palco" aria-hidden="true">
-    <div class="aparelho lado"><img src="../assets/img/print-salmos.jpg" alt="" width="440" height="956"></div>
-    <div class="aparelho centro"><img src="../assets/img/print-leitor.jpg" alt="" width="440" height="956"></div>
-    <div class="aparelho lado"><img src="../assets/img/print-video.jpg" alt="" width="440" height="956"></div>
+    <div class="aparelho lado"><img src="../assets/img/{IM("print-salmos.jpg")}" alt="" width="440" height="956"></div>
+    <div class="aparelho centro"><img src="../assets/img/{IM("print-leitor.jpg")}" alt="" width="440" height="956"></div>
+    <div class="aparelho lado"><img src="../assets/img/{IM("print-video.jpg")}" alt="" width="440" height="956"></div>
   </div>
 </section>
 
@@ -245,7 +246,7 @@ def home(lang):
     </div>
     <div class="orbita">
       <div class="coluna">{p_esq}</div>
-      <div class="aparelho"><img src="../assets/img/print-leitor.jpg" alt="{T["telas"][0][1]}" width="440" height="956" loading="lazy"></div>
+      <div class="aparelho"><img src="../assets/img/{IM("print-leitor.jpg")}" alt="{T["telas"][0][1]}" width="440" height="956" loading="lazy"></div>
       <div class="coluna">{p_dir}</div>
     </div>
   </div>
@@ -274,7 +275,7 @@ def home(lang):
 
 <section class="marfim" aria-labelledby="h-vid">
   <div class="wrap videos">
-    <div class="aparelho"><img src="../assets/img/print-video.jpg" alt="" width="440" height="956" loading="lazy"></div>
+    <div class="aparelho"><img src="../assets/img/{IM("print-video.jpg")}" alt="" width="440" height="956" loading="lazy"></div>
     <div>
       <p class="rotulo">{T["r_vid"]}</p>
       <h2 class="titulo-secao" id="h-vid">{T["t_vid"]}</h2>
