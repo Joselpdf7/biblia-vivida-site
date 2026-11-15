@@ -12,7 +12,7 @@ import html
 # Preencha antes de publicar
 # ---------------------------------------------------------------------------
 CONFIG = {
-    "dominio": "",          # ex.: bibliavivida.app  (sem https://)
+    "dominio": "vividbible.app",  # domínio principal (sem https://); bibliavivida.com abre em PT
     "email": "",            # ex.: suporte@bibliavivida.app
     "empresa": "",          # razão social de quem publica o app (titular da conta Apple)
     "cnpj": "",             # CNPJ da empresa
@@ -602,7 +602,7 @@ def pagina(lang, chave, title, desc, corpo):
 <meta name="theme-color" content="#123B46">
 <meta property="og:title" content="{html.escape(title)}">
 <meta property="og:description" content="{html.escape(desc)}">
-<meta property="og:image" content="../assets/img/avatar.png">
+<meta property="og:image" content="{f"https://{dom}" if dom else ".."}/assets/img/avatar.png">
 {canonical}{alternates}
 <link rel="icon" type="image/png" href="../assets/img/favicon.png">
 <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
@@ -650,8 +650,10 @@ RAIZ = """<!doctype html>
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 <script>
   (function () {
-    var l = (navigator.languages && navigator.languages[0] || navigator.language || "pt").toLowerCase();
-    var d = l.indexOf("pt") === 0 ? "pt" : l.indexOf("es") === 0 ? "es" : l.indexOf("en") === 0 ? "en" : "pt";
+    // bibliavivida.com abre sempre em português; nos demais, segue o idioma do navegador (padrão: inglês)
+    if (/bibliavivida\./i.test(location.hostname)) { location.replace("pt/index.html"); return; }
+    var l = (navigator.languages && navigator.languages[0] || navigator.language || "en").toLowerCase();
+    var d = l.indexOf("pt") === 0 ? "pt" : l.indexOf("es") === 0 ? "es" : "en";
     location.replace(d + "/index.html");
   })();
 </script>

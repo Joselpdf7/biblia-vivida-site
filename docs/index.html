@@ -8,8 +8,10 @@
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 <script>
   (function () {
-    var l = (navigator.languages && navigator.languages[0] || navigator.language || "pt").toLowerCase();
-    var d = l.indexOf("pt") === 0 ? "pt" : l.indexOf("es") === 0 ? "es" : l.indexOf("en") === 0 ? "en" : "pt";
+    // bibliavivida.com abre sempre em português; nos demais, segue o idioma do navegador (padrão: inglês)
+    if (/bibliavivida\./i.test(location.hostname)) { location.replace("pt/index.html"); return; }
+    var l = (navigator.languages && navigator.languages[0] || navigator.language || "en").toLowerCase();
+    var d = l.indexOf("pt") === 0 ? "pt" : l.indexOf("es") === 0 ? "es" : "en";
     location.replace(d + "/index.html");
   })();
 </script>
