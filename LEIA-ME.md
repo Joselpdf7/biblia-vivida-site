@@ -6,10 +6,22 @@ Site estático em PT, EN e ES: página inicial, Suporte, Política de Privacidad
 - Ver localmente: `python3 -m http.server 8765 -d docs` e abrir http://localhost:8765
 - Publicar: o GitHub Pages publica a pasta `docs/` da branch `main` a cada push (https://joselpdf7.github.io/biblia-vivida-site/). Rode `python3 build.py` antes de commitar.
 
-## URLs para a App Store Connect (depois que o domínio existir)
-- Support URL: `https://DOMINIO/pt/suporte.html`, `https://DOMINIO/en/support.html` e `https://DOMINIO/es/soporte.html`
-- Privacy Policy URL: `https://DOMINIO/pt/privacidade.html`, `https://DOMINIO/en/privacy.html` e `https://DOMINIO/es/privacidad.html`
-- Marketing URL: `https://DOMINIO/`
+## Site no ar (Cloudflare Pages, projeto `vividbible`)
+- https://vividbible.app: domínio principal, abre no idioma do navegador (padrão: inglês)
+- https://bibliavivida.com: abre sempre em português
+- `www.` dos dois domínios também funciona. Os registros DNS são CNAMEs para `vividbible.pages.dev`.
+- Para atualizar o site:
+
+  ```bash
+  python3 build.py && npx wrangler@3.114.0 pages deploy docs --project-name vividbible --branch main
+  ```
+
+  O Cloudflare não está ligado ao GitHub; o push só atualiza o GitHub Pages.
+
+## URLs para a App Store Connect
+- Support URL: https://vividbible.app/en/support (PT: https://vividbible.app/pt/suporte · ES: https://vividbible.app/es/soporte)
+- Privacy Policy URL: https://vividbible.app/en/privacy (PT: https://vividbible.app/pt/privacidade · ES: https://vividbible.app/es/privacidad)
+- Marketing URL: https://vividbible.app
 
 ## Pendências antes de publicar (aparecem em amarelo no site)
 1. Preencher `CONFIG` em `build.py`: domínio, e-mail de suporte, razão social, CNPJ, cidade do foro e, depois, o link da App Store.
